@@ -15,7 +15,7 @@ def load_resources():
 
 def handle_events():
     global running
-    global mx,my
+    global mx, my
     events = get_events()
     for event in events:
         if event.type == SDL_QUIT:
@@ -23,7 +23,7 @@ def handle_events():
         elif event.type == SDL_MOUSEMOTION:
             mx, my = event.x, TUK_HEIGHT - 1 - event.y
         elif event.type == SDL_MOUSEBUTTONDOWN and event.button == SDL_BUTTON_LEFT:
-            points.append((event.x,TUK_HEIGHT - 1 - event.y)) # 클릭 된 위치를 새로운 점으로 추가
+            points.append((event.x, TUK_HEIGHT - 1 - event.y))  # 클릭 된 위치를 새로운 점으로 추가
 
         elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
             running = False
@@ -36,7 +36,7 @@ def reset_world():
     global mx, my
     global points
 
-    mx,my = 0,0
+    mx, my = 0, 0
     running = True
     cx, cy = TUK_WIDTH // 2, TUK_HEIGHT // 2
     frame = 0
@@ -54,25 +54,24 @@ def set_new_target_arrow():
 
     if points:
         sx, sy = cx, cy  # p1: 시작점
-    # hx, hy = TUK_WIDTH - 50 , TUK_HEIGHT - 50
-    # hx, hy = random.randint(0, TUK_WIDTH), random.randint(0, TUK_HEIGHT)  # p2: 끝점
-        hx,hy = points[0]
+        # hx, hy = TUK_WIDTH - 50 , TUK_HEIGHT - 50
+        # hx, hy = random.randint(0, TUK_WIDTH), random.randint(0, TUK_HEIGHT)  # p2: 끝점
+        hx, hy = points[0]
         t = 0.0
         action = 1 if cx < hx else 0
         frame = 0
         target_exist = True
-    else : # 없으면 idle
-        action = 3 if action == 1  else 2 # 이전에 우측으로 이동이였으면 IDLE시 우측을 봄
+    else:  # 없으면 idle
+        action = 3 if action == 1 else 2  # 이전에 우측으로 이동이였으면 IDLE시 우측을 봄
         frame = 0
         target_exist = False
-
 
 
 def render_world():
     clear_canvas()
     TUK_ground.draw(TUK_WIDTH // 2, TUK_HEIGHT // 2)
     for p in points:
-        arrow.draw(p[0],p[1])
+        arrow.draw(p[0], p[1])
     arrow.draw(mx, my)
     character.clip_draw(frame * 100, 100 * action, 100, 100, cx, cy)
     update_canvas()
@@ -89,12 +88,12 @@ def update_world():
             cx = (1 - t) * sx + t * hx  # cx는 시작 x 와 끝 x 를 1-t:t의 비율로 섞은 위치
             cy = (1 - t) * sy + t * hy
             t += 0.001
-        else: # 목표지점에 도달하면 해야할 일
-            cx,cy = hx,hy # 캐릭터 위치를 목적지 위치와 정확히 일치시킴 (부동소수점 오차)
+        else:  # 목표지점에 도달하면 해야할 일
+            cx, cy = hx, hy  # 캐릭터 위치를 목적지 위치와 정확히 일치시킴 (부동소수점 오차)
             del points[0]
             set_new_target_arrow()
-    elif points: # 목표지점이 없는 상황에서 새 타겟이 들어오면 ...
-            set_new_target_arrow()
+    elif points:  # 목표지점이 없는 상황에서 새 타겟이 들어오면 ...
+        set_new_target_arrow()
 
 
 TUK_WIDTH, TUK_HEIGHT = 1280, 1024
