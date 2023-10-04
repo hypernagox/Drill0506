@@ -28,9 +28,12 @@ def reset_world():
     global hx, hy
     global sx,sy
     global t
+    global action
+
     running = True
     cx, cy = TUK_WIDTH // 2, TUK_HEIGHT // 2
     frame = 0
+    action = 3
 
     sx, sy = cx, cy # p1: 시작점
     #hx, hy = TUK_WIDTH - 50 , TUK_HEIGHT - 50
@@ -49,8 +52,12 @@ def update_world():
     global frame
     global cx, cy
     global t
+    global action
 
     frame = (frame + 1) % 8
+    action = 1 if cx < hx else 0
+
+
     if t <= 1.0:
         cx = (1-t)*sx + t*hx # cx는 시작 x 와 끝 x 를 1-t:t의 비율로 섞은 위치
         cy = (1-t)*sy + t*hy
