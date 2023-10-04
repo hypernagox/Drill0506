@@ -70,7 +70,7 @@ def update_world():
         t += 0.001
     else:
         cx,cy = hx,hy # 캐릭터 위치를 목적지 위치와 정확히 일치시킴 (부동소수점 오차)
-        set_new_target_arrow()
+        set_new_target_arrow() # Driil 05 끝
 
 
 
