@@ -37,14 +37,14 @@ def reset_world():
     action = 3
 
     set_new_target_arrow()
-    t = 0.0
 
 
 def set_new_target_arrow():
-    global sx, sy, hx, hy
+    global sx, sy, hx, hy, t
     sx, sy = cx, cy  # p1: 시작점
     # hx, hy = TUK_WIDTH - 50 , TUK_HEIGHT - 50
     hx, hy = random.randint(0, TUK_WIDTH), random.randint(0, TUK_HEIGHT)  # p2: 끝점
+    t = 0.0
 
 
 def render_world():
@@ -69,6 +69,7 @@ def update_world():
         cy = (1 - t) * sy + t * hy
         t += 0.001
     else:
+        cx,cy = hx,hy # 캐릭터 위치를 목적지 위치와 정확히 일치시킴
         set_new_target_arrow()
 
 
