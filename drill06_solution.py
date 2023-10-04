@@ -47,13 +47,20 @@ def set_new_target_arrow():
     global sx, sy, hx, hy, t
     global action
     global frame
-    sx, sy = cx, cy  # p1: 시작점
+    global target_exist
+
+    if points:
+        sx, sy = cx, cy  # p1: 시작점
     # hx, hy = TUK_WIDTH - 50 , TUK_HEIGHT - 50
-   # hx, hy = random.randint(0, TUK_WIDTH), random.randint(0, TUK_HEIGHT)  # p2: 끝점
-    hx,hy = points[0]
-    t = 0.0
-    action = 1 if cx < hx else 0
-    frame = 0
+    # hx, hy = random.randint(0, TUK_WIDTH), random.randint(0, TUK_HEIGHT)  # p2: 끝점
+        hx,hy = points[0]
+        t = 0.0
+        action = 1 if cx < hx else 0
+        frame = 0
+        target_exist = True
+    else : # 없으면 idle
+        action = 3 if action == 1  else 2 # 이전에 우측으로 이동이였으면 IDLE시 우측을 봄
+        frame = 0
 
 
 
@@ -74,13 +81,15 @@ def update_world():
 
     frame = (frame + 1) % 8
 
-    if t <= 1.0:
-        cx = (1 - t) * sx + t * hx  # cx는 시작 x 와 끝 x 를 1-t:t의 비율로 섞은 위치
-        cy = (1 - t) * sy + t * hy
-        t += 0.001
-    else:
-        cx,cy = hx,hy # 캐릭터 위치를 목적지 위치와 정확히 일치시킴 (부동소수점 오차)
-       # set_new_target_arrow() # Driil 05 끝
+    if target_exist:
+        if t <= 1.0:
+            cx = (1 - t) * sx + t * hx  # cx는 시작 x 와 끝 x 를 1-t:t의 비율로 섞은 위치
+            cy = (1 - t) * sy + t * hy
+            t += 0.001
+        else: # 목표지점에 도달하면 해야할 일
+            cx,cy = hx,hy # 캐릭터 위치를 목적지 위치와 정확히 일치시킴 (부동소수점 오차)
+            del points[0]
+            set_new_target_arrow()
 
 
 
