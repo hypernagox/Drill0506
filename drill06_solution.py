@@ -93,7 +93,8 @@ def update_world():
             cx,cy = hx,hy # 캐릭터 위치를 목적지 위치와 정확히 일치시킴 (부동소수점 오차)
             del points[0]
             set_new_target_arrow()
-
+    elif points: # 목표지점이 없는 상황에서 새 타겟이 들어오면 ...
+            set_new_target_arrow()
 
 
 TUK_WIDTH, TUK_HEIGHT = 1280, 1024
