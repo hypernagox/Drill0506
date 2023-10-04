@@ -2,8 +2,7 @@ from pico2d import *
 
 from pico2d import *
 
-TUK_WIDTH, TUK_HEIGHT = 1280, 1024
-open_canvas(TUK_WIDTH, TUK_HEIGHT)
+
 
 
 def load_resources():
@@ -12,7 +11,6 @@ def load_resources():
     character = load_image('animation_sheet.png')
 
 
-load_resources()
 
 
 def handle_events():
@@ -34,10 +32,6 @@ def reset_world():
     running = True
     x, y = TUK_WIDTH // 2, TUK_HEIGHT // 2
     frame = 0
-    hide_cursor()
-
-
-reset_world()
 
 
 def render_world():
@@ -51,6 +45,11 @@ def update_world():
     global frame
     frame = (frame + 1) % 8
 
+TUK_WIDTH, TUK_HEIGHT = 1280, 1024
+open_canvas(TUK_WIDTH, TUK_HEIGHT)
+hide_cursor()
+load_resources()
+reset_world()
 
 while running:
     render_world() # 월드의 현재 내용을 그린다
