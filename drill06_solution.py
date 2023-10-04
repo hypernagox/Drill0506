@@ -31,6 +31,7 @@ def reset_world():
     global running, cx, cy, frame
     global action
     global mx, my
+    global points
 
     mx,my = 0,0
     running = True
@@ -38,6 +39,7 @@ def reset_world():
     frame = 0
     action = 3
 
+    points = [(100,900),(1200,800),(500,100)]
     #set_new_target_arrow()
 
 
